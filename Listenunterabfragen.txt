@@ -1,0 +1,14 @@
+Liefert die Unterabfrage mehr als eine Zeile aber nur einer Spalte so bezeichne ich diese als Listenunterabfragen.
+
+Für Schnittmengen: Intersect
+Syntax:
+SELECT kurzname FROM partei_ergebnis INNER JOIN partei USING (partei_id)							INNER JOIN btw USING (btw_id) 
+					WHERE YEAR(termin) = '2013'
+										INTERSECT
+SELECT kurzname FROM partei_ergebnis INNER JOIN partei USING (partei_id)						     INNER JOIN btw USING (btw_id) 
+					WHERE YEAR(termin) = '2017';
+
+Liefert die Unterabfrage eine Tabelle mit mehrereren Spalten ist es eine Tabellenunterabfrage.
+
+
+Die nicht-korrelierende Unterabfrage wird einmal ausgeführt und die korrelierende wird für jede Zeile der Ausgangstabelle ausgeführt. Dies bedeutet, dass bei korrelierenden Unterabfragen immer eine Performence betrachtung durch geführt werden muss.
