@@ -6,9 +6,9 @@ import os
 
 class Settings:
     ROBO_NAME = "Wissenberg_Robo"
-    IP_ADDRESS = 'localhost'
+    IP_ADDRESS = '10.1.48.84'
     
-    BROKER = "localhost"
+    BROKER = "10.1.48.84"
     BROKER_PORT = 1883
     BROKER_USER = "rw"
     BROKER_PASSWORD = "readwrite"
@@ -30,14 +30,14 @@ class Mqtt_Writer:
         
     def openPublisher(self):
         self.publisher = mqtt.Client()
-        self.publisher.connect(Settings.BROKER, Settings.BROKER_PORT, keepalive=60)
+        self.publisher.connect(Settings.BROKER, keepalive=60)
         self.publisher.loop_start()
 
 class Main:
     
     def __init__(self):
-        #self.pub = Mqtt_Writer()
-        #self.pub.openPublisher()
+        self.pub = Mqtt_Writer()
+        self.pub.openPublisher()
         self.pygame = pygame
         self.screen = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         self.pygame.display.set_caption(Settings.W_TITLE)
@@ -81,33 +81,33 @@ class Main:
                     if event.key == self.pygame.K_a:
                         self.direction_y = "0"
             self.sendMsg()
-            time.sleep(0.1)
+            time.sleep(0.01)
             self.screen.blit(self.background, self.background_rect)
             self.pygame.display.flip()
     
     def sendMsg(self):
         if self.direction_x == "1":
             if self.direction_y == "0":
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,0")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,0")
                 print("1,0")
             elif self.direction_y == "1":
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,1")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,1")
                 print("1,1")
             elif self.direction_y == "-1":
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,-1")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="1,-1")
                 print("1,-1")
         elif self.direction_x == "-1":
             if self.direction_y == "0":
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,0")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,0")
                 print("-1,0")
             elif self.direction_y == "1":
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,1")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,1")
                 print("-1,1")
             elif self.direction_y == "-1":   
-                #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,-1")
+                self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="-1,-1")
                 print("-1,-1")  
         elif self.direction_x == "0":
-            #self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="0,0")
+            self.pub.publisher.publish(Settings.TOPIC_ROBO_MOVEMENT, payload="0,0")
             print("0,0") 
 
 if __name__ == '__main__':
