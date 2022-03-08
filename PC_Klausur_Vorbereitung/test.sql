@@ -1,0 +1,4 @@
+CREATE TABLE test (
+	test_id INTEGER PRIMARY KEY,
+	name VARCHAR(255)
+);
