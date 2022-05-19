@@ -1,0 +1,1 @@
+SELECT * FROM kommando RIGHT JOIN robo USING (robo_id) ORDER BY received_at;
